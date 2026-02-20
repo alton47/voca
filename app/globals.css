@@ -1,12 +1,16 @@
-@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap");
+@import url("https://fonts.googleapis.com");
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+/* Just incase..  @import "../node_modules/tw-animate-css/dist/tw-animate.css"; */
+
+@variant dark (&:is(.dark *));
+
+/* Correct v4 variant syntax */
+@variant dark (&:is(.dark *));
 
 :root {
   --primary: #fe5933;
-
   --cta: #2c2c2c;
   --cta-gold: #fccc41;
   --radius: 0.625rem;
@@ -48,9 +52,10 @@
   --color-primary: var(--primary);
   --color-cta: var(--cta);
   --color-cta-gold: var(--cta-gold);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Fixed: Removed undefined Geist variables to prevent build errors */
+  --font-sans: "Bricolage Grotesque", ui-sans-serif, system-ui;
   --font-bricolage: "Bricolage Grotesque", sans-serif;
+
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -85,8 +90,9 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-body {
-  font-family: var(--font-bricolage);
+/* Global Reset: Using standard CSS instead of @apply * to avoid v4 parsing issues */
+* {
+  border-color: var(--border);
 }
 
 .dark {
@@ -124,14 +130,18 @@ body {
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-bricolage);
   }
   main {
-    @apply mx-auto px-14 flex flex-col gap-8 bg-background h-full max-w-[1400px] pt-10 max-sm:px-2 mb-5;
+    @apply mx-auto px-14 flex flex-col gap-8 bg-background h-full max-w-[1400px] pt-10 mb-5;
+  }
+  /* Fixed: separated responsive class for cleaner compilation */
+  @media (max-width: 640px) {
+    main {
+      @apply px-2;
+    }
   }
   h1 {
     @apply text-3xl font-bold;
@@ -146,7 +156,12 @@ body {
     @apply flex flex-wrap gap-4 w-full max-md:justify-center justify-between;
   }
   .companion-card {
-    @apply flex flex-col rounded-4xl border border-black px-4 py-4 gap-5 w-full min-lg:max-w-[410px] justify-between;
+    @apply flex flex-col rounded-4xl border border-black px-4 py-4 gap-5 w-full justify-between;
+  }
+  @media (min-width: 1024px) {
+    .companion-card {
+      max-width: 410px;
+    }
   }
   .subject-badge {
     @apply bg-black text-white rounded-4xl text-sm px-2 py-1 capitalize;
@@ -179,7 +194,12 @@ body {
     @apply rounded-4xl border border-black px-7 pt-7 pb-10 max-lg:w-full bg-white;
   }
   .companion-limit {
-    @apply items-center justify-center flex flex-col gap-4 w-full min-2xl:w-1/2 pt-20 text-center;
+    @apply items-center justify-center flex flex-col gap-4 w-full pt-20 text-center;
+  }
+  @media (min-width: 1536px) {
+    .companion-limit {
+      width: 50%;
+    }
   }
 
   .companion-section {
