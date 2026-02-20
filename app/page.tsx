@@ -1,7 +1,13 @@
+import { Button } from "@/components/ui/button";
 import React from "react";
 
 const page = () => {
-  return <div className="text-9xl">Matakoo</div>;
+  return (
+    <div>
+      <h1 className="text-9xl">Matakoo</h1>
+      <Button>Na Matako</Button>
+    </div>
+  );
 };
 
 export default page;
