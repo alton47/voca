@@ -35,6 +35,8 @@ const formSchema = z.object({
   duration: z.coerce.number().min(1, { message: "Duration is required." }),
 });
 
+//Add some SSH
+
 const CompanionForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
